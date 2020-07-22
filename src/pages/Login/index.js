@@ -4,15 +4,30 @@ import { colors } from '../../utils';
 import { Input, Button } from '../../components';
 import SecondaryButton from '../../components/atoms/Button/SecondaryButton';
 import firestore from '@react-native-firebase/firestore';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = ({navigation}) => {
   const [login, setLogin] = useState({
     username: '',
     password: ''
   })
+  useEffect(() =>{
+    checkLogin()
+  },[])
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch();
+  const userInfo = useSelector(state => state.LoginReducer)
+  
+  const checkLogin = async () => {
+    console.log(userInfo)
+    if (userInfo) {
+      if (userInfo.dataUser.role === 'admin') {
+        navigation.replace('HomeAdmin')
+      } else {
+        navigation.replace('Home')
+      }
+    }
+  }
 
   const onPressLogin = async () => {
     if (login.username === '' || login.password === '') return Alert.alert('Field harus di isi!')
@@ -35,6 +50,7 @@ const Login = ({navigation}) => {
         navigation.replace('Home')
       }
       else {
+        dispatch({type: 'SET_USER_DATA', data: isExistUser[0]})
         Alert.alert("Berhasil Login Sebagai Admin!")
         navigation.replace('HomeAdmin')
       }

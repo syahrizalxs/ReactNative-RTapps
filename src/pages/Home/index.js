@@ -2,13 +2,19 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Card } from '../../components'
 import { colors } from '../../utils'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import ImagePicker, { openCamera } from 'react-native-image-crop-picker';
 
 const Home = ({navigation}) => {
   const userReducer = useSelector(state => state.LoginReducer)
+  const dispacth = useDispatch()
   const onPressCard = (screen) => {
     navigation.navigate(screen)
+  }
+  
+  const onLogout = () => {
+    dispacth({type: 'DESTROY_USER'})
+    navigation.replace('Login')
   }
   
   return (
@@ -20,7 +26,7 @@ const Home = ({navigation}) => {
         <Card title="Data KK" onPress={()  => onPressCard('DataKk')}></Card>
         <Card title="Lapor" onPress={() => onPressCard('LaporSelector')} ></Card>
         <Card title="Tentang" onPress={() => onPressCard('Tentang')}></Card>
-        <Card title="Keluar"></Card>
+        <Card title="Keluar" onPress={onLogout}></Card>
       </View>
     </View>
   )

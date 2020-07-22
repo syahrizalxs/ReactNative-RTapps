@@ -26,6 +26,11 @@ const LoginReducer = (state = initialStateLogin, action) => {
       dataUser: action.data
     }
   }
+  if (action.type === 'DESTROY_USER') {
+    return {
+      dataUser: undefined
+    }
+  }
   return state
 };
 

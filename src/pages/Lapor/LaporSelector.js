@@ -7,7 +7,16 @@ import { useSelector } from 'react-redux'
 const LaporSelector = ({navigation}) => {
   const userReducer = useSelector(state => state.LoginReducer)
   const onPressCard = (screen) => {
-    navigation.navigate(screen)
+    if (userReducer.dataUser.role === 'admin' && screen === 'tamu') {
+      return navigation.navigate('ListLaporanTamu')
+    } else if (userReducer.dataUser.role === 'user' && screen === 'tamu') {
+      return navigation.navigate('LaporTamu')
+    }
+    if (userReducer.dataUser.role === 'admin' && screen === 'keluhan') {
+      return navigation.navigate('ListLaporanKeluhan')
+    } else {
+      return navigation.navigate('LaporKeluhan')
+    }
   }
   
   return (
@@ -16,9 +25,9 @@ const LaporSelector = ({navigation}) => {
         <Text style={styles.title}>Pilih Jenis Lapor</Text>
       </View>
       <View style={styles.wrapperMenu}>
-        <Button style={styles.button} title="Lapor Tamu" onPress={() => onPressCard('LaporTamu')}></Button>
+        <Button style={styles.button} title="Lapor Tamu" onPress={() => onPressCard('tamu')}></Button>
         <View style={styles.space(20)}></View>
-        <Button style={styles.button} title="Lapor Keluhan" onPress={() => onPressCard('LaporKeluhan')}></Button>
+        <Button style={styles.button} title="Lapor Keluhan" onPress={() => onPressCard('keluhan')}></Button>
       </View>
     </View>
   )

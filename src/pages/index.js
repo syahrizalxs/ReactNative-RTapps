@@ -17,7 +17,13 @@ import LaporSelector from './Lapor/LaporSelector'
 import LaporTamu from './Lapor/LaporTamu'
 import LaporKeluhan from './Lapor/LaporKeluhan'
 
+import ListLaporanTamu from './Lapor/ListLaporanTamu'
+import ListLaporanKeluhan from './Lapor/ListLaporanKeluhan'
+
+import DetailTamu from './Lapor/DetailTamu'
 import ViewDataBalita from './DataBalita/ViewDataBalita'
+
+import Tentang from './Tentang'
 
 export {
   Splash,
@@ -35,5 +41,10 @@ export {
   DataWarga,
   LaporTamu,
   LaporSelector,
-  LaporKeluhan
+  LaporKeluhan,
+  Tentang,
+  ListLaporanTamu,
+  ListLaporanKeluhan,
+  DetailTamu
+
 }

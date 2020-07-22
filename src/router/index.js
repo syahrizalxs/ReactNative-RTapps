@@ -4,7 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 //Page
 import { Splash, Login, Register, Home, DataKk, AddDataKk, EditDataKk, HomeAdmin, DataLansia, 
-          DataBalita, ViewDataBalita, EditDataLansia, DataWarga, LaporTamu, LaporSelector, LaporKeluhan } from '../pages'
+         DataBalita, ViewDataBalita, EditDataLansia, DataWarga, LaporTamu, LaporSelector, LaporKeluhan, Tentang,
+         ListLaporanTamu, ListLaporanKeluhan, DetailTamu } from '../pages'
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,10 @@ const Router = () => {
       <Stack.Screen name="LaporTamu" component={LaporTamu} options={{headerShown: false}} />
       <Stack.Screen name="LaporSelector" component={LaporSelector} options={{headerShown: false}} />
       <Stack.Screen name="LaporKeluhan" component={LaporKeluhan} options={{headerShown: false}} />
+      <Stack.Screen name="ListLaporanTamu" component={ListLaporanTamu} options={{headerShown: false}} />
+      <Stack.Screen name="ListLaporanKeluhan" component={ListLaporanKeluhan} options={{headerShown: false}} />
+      <Stack.Screen name="DetailTamu" component={DetailTamu} options={{headerShown: false}} />
+      <Stack.Screen name="Tentang" component={Tentang} options={{headerShown: false}} />
     </Stack.Navigator>
   );
 }

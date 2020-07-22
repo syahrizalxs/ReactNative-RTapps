@@ -11,17 +11,42 @@ import { useSelector } from 'react-redux';
 
 
 let dimension = Dimensions.get('screen')
-const LaporKeluhan = ({navigation}) => {
+const DetailTamu = ({navigation, route}) => {
+  useEffect(() => {
+    getDetail()
+  }, [])
+  const {id} = route.params
   const userInfo = useSelector(state => state.LoginReducer)
   const [loading, setLoading] = useState(false)
+  const [docId, setDocId] = useState('')
   const [form, setForm] = useState({
-    judulKeluhan: '',
-    lokasiKejadian: '',
-    deskripsiKeluhan: '',
+    namaTamu: '',
+    alamatTamu: '',
+    keperluan: '',
     foto: '',
-    createdBy: ''
+    tujuan: '',
+    createdBy: '',
+    tanggalBertamu: ''
   })
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
+  const getDetail = async () => {
+    let users = []
+    let docId = ''
+    await firestore()
+    .collection('tamu')
+    .where('foto', '==', id)
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(documentSnapshot => {
+        docId = documentSnapshot.id
+        users.push(documentSnapshot.data());
+      });
+    })
+    console.log(users[0])
+    setForm(users[0])
+    setDocId(docId)
+  };
   takeCamera = function () {
     ImagePicker.openCamera({
       width: 300,
@@ -46,7 +71,7 @@ const LaporKeluhan = ({navigation}) => {
     setLoading(true);
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
     const TODAY = new Date()
-    const ref = `keluhan/${form.judulKeluhan}.jpg`
+    const ref = `tamu/${form.namaTamu}.jpg`
     const reference = firebase.storage().ref(ref);
     const pathToFile = form.foto
     // uploads file
@@ -56,17 +81,17 @@ const LaporKeluhan = ({navigation}) => {
       const resUrl = await firebase.storage().ref(ref).getDownloadURL()
       if (!resUrl) return Alert.alert('Terjadi Kesalahan!')
       param.foto = resUrl
-      param.pelapor = userInfo.dataUser.namaKk
+      param.tujuan = userInfo.dataUser.namaKk
       param.createdBy = userInfo.dataUser.username
       param.tanggalBertamu = TODAY
       console.log(TODAY.toLocaleDateString("id-ID", options))
-    if (form.judulKeluhan === '') {
-      Alert.alert('judul Keluhan Wajib Di isi!')
+    if (form.namaTamu === '') {
+      Alert.alert('Nama Tamu Wajib Di isi!')
       setLoading(false)
       return
     }
       await firestore()
-      .collection('keluhan')
+      .collection('tamu')
       .add(form)
       .then((res) => {
         setLoading(false)
@@ -78,12 +103,12 @@ const LaporKeluhan = ({navigation}) => {
     }
   }
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <View style={style.wrapper}>
       <ActivityIndicator color={colors.default} style={style.loading} size="large" animating={loading} />
-        <Text style={style.title}>Lapor Keluhan</Text>
+        <Text style={style.title}>Lapor Tamu</Text>
         <View style={style.space(10)}></View>
-        <Text style={style.label}>Unggah foto pendukung / bukti</Text>
+        <Text style={style.label}>Foto KTP Tamu</Text>
         <Image
           style={style.image}
           source={{
@@ -91,36 +116,42 @@ const LaporKeluhan = ({navigation}) => {
           }}
         />
         <View style={style.space(10)}></View>
-        <SecondaryButton title={"Ambil Gambar"} onPress={() => takeCamera()}></SecondaryButton>
+        {/* <SecondaryButton title={"Ambil Gambar"} onPress={() => takeCamera()}></SecondaryButton> */}
         <View style={style.space(20)}></View>
-        <Text style={style.label}>Judul Keluhan</Text>
-        <Input 
-          placeholder="Judul Keluhan"
-          value={form.judulKeluhan}
-          onChangeText={value => handleForm(value, 'judulKeluhan')}
-        ></Input>
-        <Text style={style.label}>Lokasi Kejadian</Text>
-        <Input 
-          placeholder="Lokasi Kejadian"
-          value={form.lokasiKejadian}
-          onChangeText={value => handleForm(value, 'lokasiKejadian')}
-        ></Input>
-        <Text style={style.label}>Deskripsi Keluhan</Text>
-        <Input 
-          placeholder="Deskripsi Keluhan"
-          value={form.deskripsiKeluhan}
-          multiline={true}
-          numberOfLines={4}
-          onChangeText={value => handleForm(value, 'deskripsiKeluhan')}
-        ></Input>
+        <Text style={style.label}>Nama Tamu</Text>
+        {/* <Input 
+          placeholder="Nama Tamu"
+          value={form.namaTamu}
+          onChangeText={value => handleForm(value, 'namaTamu')}
+        ></Input> */}
+        <Text style={style.value}>{form.namaTamu}</Text>
+        <Text style={style.label}>Domisili Tamu</Text>
+        {/* <Input 
+          placeholder="Domisili Tamu"
+          value={form.alamatTamu}
+          onChangeText={value => handleForm(value, 'alamatTamu')}
+        ></Input> */}
+        <Text style={style.value}>{form.alamatTamu}</Text>
+        {/* <Text style={{color: '#000', opacity: 0.5}}>* Isi domisili tamu jika tamu lebih dari 1 x 24 Jam / Kost</Text> */}
+        <Text style={style.label}>Keperluan</Text>
+        {/* <Input 
+          placeholder="Keperluan"
+          value={form.keperluan}
+          onChangeText={value => handleForm(value, 'keperluan')}
+        ></Input> */}
+        <Text style={style.value}>{form.keperluan}</Text>
         <View style={style.space(20)}></View>
-        <Button title={'Lapor'} onPress={handleOk} ></Button>
+        <Text style={style.label}>Tanggal Bertamu</Text>
+        <Text style={style.value}>{new Date(form.tanggalBertamu._seconds * 1000).toLocaleDateString("id-ID", options)}</Text>
+        <Text style={style.label}>Bertamu Ke Kediaman</Text>
+        <Text style={style.value}>{form.tujuan}</Text>
+        {/* <Button title={'Lapor'} onPress={handleOk} ></Button> */}
       </View>
     </ScrollView>
   ) 
 }
 
-export default LaporKeluhan;
+export default DetailTamu;
 
 const style = StyleSheet.create({
   wrapper: {
@@ -163,6 +194,11 @@ const style = StyleSheet.create({
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    // zIndex: 1,
+  },
+  value: {
+    fontWeight: "bold",
+    color: colors.default,
+    marginHorizontal: 8,
+    marginVertical: 5
   }
 })

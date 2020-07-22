@@ -1,13 +1,19 @@
 import React from 'react'
 import { StyleSheet, Text, View, BackHandler } from 'react-native'
-import { Card } from '../../components'
+import { Card, SecondayButton } from '../../components'
 import { colors } from '../../utils'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 const HomeAdmin = ({navigation}) => {
   const userReducer = useSelector(state => state.LoginReducer)
+  const dispatch = useDispatch()
   const onPressCard = (screen) => {
     navigation.navigate(screen)
+  }
+
+  const onLogout = () => {
+    dispatch({ type: 'DESTROY_USER' })
+    navigation.replace('Login')
   }
   
   return (
@@ -19,7 +25,10 @@ const HomeAdmin = ({navigation}) => {
         <Card title="Data Warga" onPress={() => onPressCard('DataWarga')}></Card>
         <Card title="Data Lansia" onPress={() => onPressCard('DataLansia')}></Card>
         <Card title="Data Balita" onPress={() => onPressCard('DataBalita')}></Card>
-        <Card title="Laporan Warga" onPress={() => onPressCard('LaporanWarga')}></Card>
+        <Card title="Laporan Warga" onPress={() => onPressCard('LaporSelector')}></Card>
+        <View style={{width: 200, marginTop: 20}}>
+          <SecondayButton title="Keluar" onPress={() => onLogout()}></SecondayButton>
+        </View>
       </View>
     </View>
   )

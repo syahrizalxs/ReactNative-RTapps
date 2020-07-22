@@ -15,8 +15,8 @@ export default Card
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: 150,
-    height: 150,
+    width: 130,
+    height: 130,
     backgroundColor: colors.default,
     borderRadius: 7,
     shadowRadius: 1,
