@@ -37,6 +37,19 @@ const LaporTamu = ({navigation}) => {
     });
   }
 
+  openGallery = async function (camera) {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+      setForm({
+        ...form,
+        foto: image.path
+      })
+    });  
+  };
+
   const handleForm = (value, type) => {
     setForm({
       ...form,
@@ -48,7 +61,7 @@ const LaporTamu = ({navigation}) => {
     setLoading(true);
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
     const TODAY = new Date()
-    const ref = `tamu/${form.namaTamu}.jpg`
+    const ref = `tamu/${form.namaTamu}.png`
     const reference = firebase.storage().ref(ref);
     const pathToFile = form.foto
     // uploads file
@@ -61,7 +74,6 @@ const LaporTamu = ({navigation}) => {
       param.tujuan = userInfo.dataUser.namaKk
       param.createdBy = userInfo.dataUser.username
       param.tanggalBertamu = TODAY
-      console.log(TODAY.toLocaleDateString("id-ID", options))
     if (form.namaTamu === '') {
       Alert.alert('Nama Tamu Wajib Di isi!')
       setLoading(false)
@@ -80,7 +92,7 @@ const LaporTamu = ({navigation}) => {
     }
   }
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <View style={style.wrapper}>
       <ActivityIndicator color={colors.default} style={style.loading} size="large" animating={loading} />
         <Text style={style.title}>Lapor Tamu</Text>
@@ -94,6 +106,8 @@ const LaporTamu = ({navigation}) => {
         />
         <View style={style.space(10)}></View>
         <SecondaryButton title={"Ambil Gambar"} onPress={() => takeCamera()}></SecondaryButton>
+        <View style={style.space(10)}></View>
+        <SecondaryButton title={"Pilih dari Gallery"} onPress={() => openGallery()}></SecondaryButton>
         <View style={style.space(20)}></View>
         <Text style={style.label}>Nama Tamu</Text>
         <Input 

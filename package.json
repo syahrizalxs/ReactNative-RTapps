@@ -11,6 +11,7 @@
     "emulator": "C:/Users/syahrizal.setiawan/AppData/Local/Android/Sdk/emulator/emulator -avd Nexus_5X_API_29_x86"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^2.6.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^7.3.1",
     "@react-native-firebase/firestore": "^7.2.2",
@@ -25,6 +26,8 @@
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^3.0.4",
     "react-native-screens": "^2.8.0",
+    "react-native-svg": "^12.1.0",
+    "react-native-svg-transformer": "^0.14.3",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5"
   },

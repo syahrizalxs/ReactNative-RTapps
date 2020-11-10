@@ -2,9 +2,9 @@ import React from 'react'
 import { TextInput, StyleSheet } from 'react-native'
 import { colors } from '../../../utils'
 
-const Input = ({placeholder, ...rest}) => {
+const Input = ({placeholder, editable, ...rest}) => {
   return (
-    <TextInput style={style.input} placeholder={placeholder} {...rest} />
+    <TextInput style={style.input} placeholder={placeholder} editable={editable} {...rest} />
   )
 }
 

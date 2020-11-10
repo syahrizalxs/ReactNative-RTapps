@@ -18,7 +18,7 @@ const DataKk = ({navigation}) => {
   
   useEffect(()=> {
     get()
-  }, [])
+  })
   const get = async () => {
     let users = []
     await firestore()

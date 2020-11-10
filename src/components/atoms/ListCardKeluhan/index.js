@@ -10,10 +10,10 @@ const ListCardKeluhan = ({data, ...rest}) => {
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.text}>Nama Tamu: <Text style={styles.textInside}>{data.namaTamu}</Text></Text>
-      <Text style={styles.text}>Keperluan: <Text style={styles.textInside}>{data.keperluan}</Text></Text>
-      <Text style={styles.text}>Bertamu di Kediaman: <Text style={styles.textInside}>{data.tujuan}</Text></Text>
-      <Text style={styles.text}>Tanggal: <Text style={styles.textInside}>{new Date(data.tanggalBertamu).toLocaleDateString("id-ID", options)}</Text></Text>
+      <Text style={styles.text}>Nama Pelapor: <Text style={styles.textInside}>{data.pelapor}</Text></Text>
+      <Text style={styles.text}>Judul Keluhan: <Text style={styles.textInside}>{data.judulKeluhan}</Text></Text>
+      <Text style={styles.text}>Lokasi Kejadian: <Text style={styles.textInside}>{data.lokasiKejadian}</Text></Text>
+      <Text style={styles.text}>Tanggal: <Text style={styles.textInside}>{new Date(data.tanggalBertamu).toLocaleDateString("id-ID")}</Text></Text>
     </View>
   )
 }
@@ -23,7 +23,7 @@ export default ListCardKeluhan
 const styles = StyleSheet.create({
   wrapper: {
     width: width - 20,
-    height: 90,
+    height: 120,
     backgroundColor: colors.base,
     borderRadius: 7,
     shadowRadius: 2,

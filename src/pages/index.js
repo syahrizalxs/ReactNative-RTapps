@@ -21,6 +21,8 @@ import ListLaporanTamu from './Lapor/ListLaporanTamu'
 import ListLaporanKeluhan from './Lapor/ListLaporanKeluhan'
 
 import DetailTamu from './Lapor/DetailTamu'
+import DetailKeluhan from './Lapor/DetailKeluhan'
+
 import ViewDataBalita from './DataBalita/ViewDataBalita'
 
 import Tentang from './Tentang'
@@ -45,6 +47,6 @@ export {
   Tentang,
   ListLaporanTamu,
   ListLaporanKeluhan,
-  DetailTamu
-
+  DetailTamu,
+  DetailKeluhan
 }

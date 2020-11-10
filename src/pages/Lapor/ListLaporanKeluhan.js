@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { colors } from '../../utils';
 import { useSelector } from 'react-redux';
 import { ActionButton } from '../../components'
-import ListCardTamu from '../../components/atoms/ListCardTamu';
+import ListCardKeluhan from '../../components/atoms/ListCardKeluhan';
 import firestore from '@react-native-firebase/firestore';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -18,7 +18,7 @@ const ListLaporanKeluhan = ({navigation}) => {
   
   useEffect(()=> {
     get()
-  })
+  }, [])
   const get = async () => {
     let users = []
     await firestore()
@@ -46,10 +46,10 @@ const ListLaporanKeluhan = ({navigation}) => {
       <View style={{alignItems: "center"}}>
         {isEmpty ? <NoData /> : data.map((item, index) => {
           return (
-            <TouchableOpacity key={index} onPress={() => navigation.navigate('EditDataKk', {
+            <TouchableOpacity key={index} onPress={() => navigation.navigate('DetailKeluhan', {
               id: item.foto
             })}>
-              <ListCardTamu data={item} key={item.foto} />
+              <ListCardKeluhan data={item} key={item.foto} />
             </TouchableOpacity>
           )
           })

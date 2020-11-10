@@ -19,15 +19,30 @@ const Register = ({navigation}) => {
     })
   }
 
-  const handleRegister = async () => {
+  const handleRegister = async () => {   
       await firestore()
       .collection('users')
-      .add(register)
-      .then((res) => {
-        console.log(res)
-        Alert.alert('Pengguna Berhasil Ditambahkan!')
-        navigation.navigate('Login')
-      });
+      .doc(register.username)
+      .get()
+      .then(async doc => {
+        if (doc.exists) {
+          Alert.alert('Username terebut telah digunakan!')
+          return
+        } else {
+          await firestore()
+          .collection('users')
+          .doc(register.username)
+          .set(register)
+          .then((res) => {
+            console.log(res)
+            Alert.alert('Pengguna Berhasil Ditambahkan!')
+            navigation.navigate('Login')
+          })
+          .catch(e => {
+            console.log(e)
+          })
+        }
+      })
   }
   return (
     <View style={styles.wrapper}>

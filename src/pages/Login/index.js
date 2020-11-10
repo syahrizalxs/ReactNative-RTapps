@@ -20,7 +20,7 @@ const Login = ({navigation}) => {
   
   const checkLogin = async () => {
     console.log(userInfo)
-    if (userInfo) {
+    if (userInfo.dataUser.username) {
       if (userInfo.dataUser.role === 'admin') {
         navigation.replace('HomeAdmin')
       } else {
@@ -33,6 +33,7 @@ const Login = ({navigation}) => {
     if (login.username === '' || login.password === '') return Alert.alert('Field harus di isi!')
     setLoading(true)
     let isExistUser = []
+    
     await firestore()
       .collection('users')
       // Filter results
@@ -69,7 +70,7 @@ const Login = ({navigation}) => {
   return (
     <View style={{flex: 1, backgroundColor: colors.base, justifyContent: "center", padding: 20}}>
       <ActivityIndicator color="#0000ff" size="large" style={style.loading} animating={loading}/>
-      <Text style={{color: colors.default, fontSize: 19, fontWeight: 'bold'}}> Aplikasi Adm. Kependudukan RT.05/012</Text>
+      <Text style={{color: colors.default, fontSize: 19, fontWeight: 'bold'}}> Sistem Informasi Kependudukan RT.05/05</Text>
       <View style={style.space(25)}/>
       <Input 
         placeholder="Username"

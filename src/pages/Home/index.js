@@ -3,7 +3,9 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Card } from '../../components'
 import { colors } from '../../utils'
 import { useSelector, useDispatch } from 'react-redux'
-import ImagePicker, { openCamera } from 'react-native-image-crop-picker';
+import ImagePicker, { openCamera } from 'react-native-image-crop-picker'
+
+import LogoPenduduk from '../../styles/logopenduduk.svg'
 
 const Home = ({navigation}) => {
   const userReducer = useSelector(state => state.LoginReducer)
@@ -23,7 +25,13 @@ const Home = ({navigation}) => {
         <Text style={styles.title}>Menu Utama</Text>
       </View>
       <View style={styles.wrapperMenu}>
-        <Card title="Data KK" onPress={()  => onPressCard('DataKk')}></Card>
+        {/* <TouchableOpacity>
+          <LogoPenduduk width={30} height={30}/>
+          <Text>Data KK</Text>
+        </TouchableOpacity> */}
+
+        <Card title="Data KK" onPress={()  => onPressCard('DataKk')}>
+        </Card>
         <Card title="Lapor" onPress={() => onPressCard('LaporSelector')} ></Card>
         <Card title="Tentang" onPress={() => onPressCard('Tentang')}></Card>
         <Card title="Keluar" onPress={onLogout}></Card>

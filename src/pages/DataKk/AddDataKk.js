@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Alert, ScrollView } from 'react-native';
+import { View, Text, Alert, ScrollView, Picker } from 'react-native';
 import { colors } from '../../utils';
 import { useSelector } from 'react-redux';
 import { Input, Button } from '../../components'
@@ -10,10 +10,10 @@ const AddDataKk = ({navigation}) => {
   const [biodata, setBiodata] = useState({
     nik: '',
     nama: '',
-    jenisKelamin: '',
+    jenisKelamin: 'Laki - Laki',
     agama: '',
-    status: '',
-    tanggalLahir: '',
+    status: 'Belum Menikah',
+    tanggalLahir: '2020-12-01',
     noKk: dataReducer.dataUser.noKk,
     umur: '',
   })
@@ -58,11 +58,21 @@ const AddDataKk = ({navigation}) => {
           ></Input>
         <View style={styles.space(10)}></View>
         <Text style={styles.label}>Jenis Kelamin</Text>
-        <Input 
+        {/* <Input 
           placeholder={"Jenis Kelamin"}
           value={biodata.jenisKelamin}
           onChangeText={value => handleForm(value, 'jenisKelamin')}
-          ></Input>
+          ></Input> */}
+          <Picker
+            selectedValue={biodata.jenisKelamin}
+            style={styles.dropdown}
+            itemStyle={{backgroundColor: "grey", color: "blue", fontFamily:"Ebrima", fontSize:17}}
+            mode={'dialog'}
+            onValueChange={(itemValue, itemIndex) => handleForm(itemValue, 'jenisKelamin')}
+          >
+            <Picker.Item label="Laki - Laki" value="Laki - Laki" />
+            <Picker.Item label="Perempuan" value="Perempuan" />
+          </Picker>
         <View style={styles.space(10)}></View>
         <Text style={styles.label}>Tanggal Lahir</Text>
         <Input 
@@ -81,11 +91,21 @@ const AddDataKk = ({navigation}) => {
         </Input>
         <View style={styles.space(10)}></View>
         <Text style={styles.label}>Status Perkawinan</Text>
-        <Input 
+        {/* <Input 
           placeholder={"Status Perkawinan"}
           value={biodata.status}
           onChangeText={value => handleForm(value, 'status')}>
-        </Input>
+        </Input> */}
+        <Picker
+            selectedValue={biodata.status}
+            style={styles.dropdown}
+            itemStyle={{backgroundColor: "grey", color: "blue", fontFamily:"Ebrima", fontSize:17}}
+            mode={'dialog'}
+            onValueChange={(itemValue, itemIndex) => handleForm(itemValue, 'status')}
+          >
+            <Picker.Item label="Menikah" value="Menikah" />
+            <Picker.Item label="Belum Menikah" value="Belum Menikah" />
+          </Picker>
         <View style={styles.space(30)}></View>
         <Button title={'SIMPAN'} onPress={handleSave}></Button>
       </View>
@@ -117,9 +137,19 @@ const styles = {
     fontSize: 14,
     color: colors.default,
     marginHorizontal: 8,
-    marginVertical: 5
+    marginVertical: 5,
+    fontWeight: "bold"
   },
   input: {
     marginBottom: 10
   },
+  dropdown: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: colors.default,
+    borderRadius: 13,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    color: colors.default
+  }
 }
